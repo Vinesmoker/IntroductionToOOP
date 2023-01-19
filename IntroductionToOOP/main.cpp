@@ -25,23 +25,27 @@ public:
 		this->y = y;
 	}
 	// Constructor:
+	/*
 	Point()
 	{
 		x = y = 0;
 		cout << "Constructor:\t" << this << endl;
 	}
+	*/
 	~Point()
 	{
 		cout << "Destructor:\t" << this << endl;
 	}
 
 	// Methods:
+	/*
 	Point(double x)
 	{
 		this->x = x;
 		this->y = 0;
 		cout << "1ArgConstructor:" << this << endl;
 	}
+	*/
 	double Distance(Point other)
 	{
 		double xDist = this->x - other.x;
@@ -53,7 +57,7 @@ public:
 	{
 		cout << "\tX = " << x << "\tY = " << y << endl;
 	}
-	Point(double x, double y)
+	Point(double x =0, double y = 0)
 	{
 		this->x = x;
 		this->y = y;
