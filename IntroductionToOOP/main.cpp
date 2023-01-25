@@ -6,7 +6,8 @@ constexpr auto delimiter = "____________________________________________________
 //#define DISTANCE_CHECK
 //#define CONSTRUCTOR_CHECK
 //#define ASSIGNMENT_CHECK_1
-#define ASSIGNMENT_CHECK_2
+//#define ASSIGNMENT_CHECK_2
+#define OPERATOR_RELOAD
 
 
 class Point   // Создавая структуру или класс, мы создаем новый тип данных.
@@ -50,11 +51,24 @@ public:
 	}
 
 	// Operators:
-	Point operator = (const Point& other)
+	Point& operator=(const Point& other)
 	{
 		this->x = other.x;
 		this->y = other.y;
 		cout << "CopyAssignment:\t" << this << endl;
+		return *this;
+	}
+	Point& operator++()
+	{
+		x++;
+		y++;
+		return *this;
+	}
+	Point operator++(int)
+	{
+		Point old = *this;
+		x++;
+		y++;
 		return *this;
 	}
 
@@ -85,6 +99,7 @@ public:
 		cout << "Constructor:\t" << this << endl;
 	}
 
+	
 };
 double Distance(const Point& A, const Point& B)
 {
@@ -92,6 +107,20 @@ double Distance(const Point& A, const Point& B)
 	double yDist = A.GetY() - B.GetY();
 	double dist = sqrt(xDist * xDist + yDist * yDist);
 	return dist;
+}
+Point operator+(const Point& left, const Point& right)
+{
+	Point Res;
+	Res.SetX(left.GetX() + right.GetX());
+	Res.SetY(left.GetY() + right.GetY());
+	return Res;
+}
+Point operator*(const Point& left, const Point& right)
+{
+	Point Res2;
+	Res2.SetX(left.GetX() * right.GetX());
+	Res2.SetY(left.GetY() * right.GetY());
+	return Res2;
 }
 
 void main()
@@ -155,7 +184,28 @@ void main()
 	a = b = c = 0;
 
 	Point A, B, C;
+	cout << delimiter << endl;
 	A = B = C = Point(2, 3);
+	//Point(2, 3) - явный вызов конструктора и он создает временный безымянный объект
+	// Временные безымянные объекты существуют в пределах одного выражения.
+	cout << delimiter << endl;
 #endif // ASSIGNMENT_CHECK2
+
+#ifdef OPERATOR_RELOAD
+
+	int a = 2;
+	int b = 3;
+	int c = a + b;
+
+	Point A(2, 3);
+	Point B(4, 5);
+	Point C = A + B;
+	C.Print();
+	++C;
+	C.Print();
+	C++;
+	C.Print();
+
+#endif // OPERATOR_RELOAD
 
 }
