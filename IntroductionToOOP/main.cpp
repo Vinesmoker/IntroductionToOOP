@@ -98,9 +98,8 @@ public:
 		this->y = y;
 		cout << "Constructor:\t" << this << endl;
 	}
-
-	
 };
+
 double Distance(const Point& A, const Point& B)
 {
 	double xDist = A.GetX() - B.GetX();
