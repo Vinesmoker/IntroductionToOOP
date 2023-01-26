@@ -71,6 +71,12 @@ public:
 		y++;
 		return *this;
 	}
+	Point& operator()(double x, double y)
+	{
+		SetX(x);
+		SetY(y);
+		return *this;
+	}
 
 	// Methods:
 	/*
@@ -120,6 +126,30 @@ Point operator*(const Point& left, const Point& right)
 	Res2.SetX(left.GetX() * right.GetX());
 	Res2.SetY(left.GetY() * right.GetY());
 	return Res2;
+}
+bool operator==(const Point& left, const Point& right)
+{
+	/*
+	if (left.GetX() == right.GetX() && left.GetY() == right.GetY())
+	return true;
+	else
+		return false;
+		*/
+	return left.GetX() == right.GetX() && left.GetY() == right.GetY();
+}
+bool operator!=(const Point& left, const Point& right)
+{
+	return !(left == right);
+}
+std::ostream& operator<<(std::ostream& os, const Point& obj)
+{
+	return os << "X = " << obj.GetX() << "Y = " << obj.GetY();
+}
+std::istream& operator>>(std::istream& is, Point& obj)
+{
+	double x, y;
+	is >> x >> y;
+	return is;
 }
 
 void main()
@@ -195,16 +225,31 @@ void main()
 	int a = 2;
 	int b = 3;
 	int c = a + b;
-
+	/*
 	Point A(2, 3);
 	Point B(4, 5);
-	Point C = A + B;
+	Point C = A + B * A + B;
 	C.Print();
 	++C;
 	C.Print();
 	C++;
 	C.Print();
+	*/
+	/*Point A(2, 3);
+	Point B(4, 5);
+	cout << (A == B) << endl;
+	cout << (A != B) << endl;*/
 
+	Point A(2, 3);
+	//A.Print();
+	//A.SetX(12);
+	//A.SetY(13);
+	A(22, 33);
+	//A.Print();
+	cout << A << endl; // cout -- ostream
+
+	cout << "¬ведите координаты точки: "; cin >> A; // cin - istream
+	cout << A << endl;
 #endif // OPERATOR_RELOAD
 
 }
