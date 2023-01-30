@@ -1,6 +1,8 @@
 #include<iostream>
 using namespace std;
 
+//#define CONSTRACTORS_CHECK
+
 class Fraction
 {
 	int integer;
@@ -89,18 +91,22 @@ public:
 void main() 
 {
 	setlocale(LC_ALL, "");
+
+#ifdef CONSTRACTORS_CHECK
 	Fraction A;
 	A.print();
-	
+
 	Fraction B = 5;
 	B.print();
 
 	Fraction C(2, 3);
 	C.print();
-	
+
 	Fraction D(2, 3, 4);
 	D.print();
 
 	Fraction E = D;
 	E.print();
+#endif // CONSTRACTORS_CHECK
+
 }
