@@ -1,12 +1,17 @@
+
 #include<iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;;
 
 class String;
 String operator+(const String& left, const String& right);
+
 class String
 {
-	int size;  // размер строки
-	char* str; // адрес строки в динамическом массиве
+	int size;		//размер строки в Байтах
+	char* str;		//адрес строки в динамической памяти
 public:
 	int get_size()const
 	{
@@ -20,54 +25,64 @@ public:
 	{
 		return str;
 	}
-	// Constructers:
-	explicit String(int size = 80):size(size), str(new char[size] {})
+
+	//				Constructors:
+	explicit String(int size = 80) :size(size), str(new char[size] {})
 	{
-		cout << "DegConstructor:\t\t" << this << endl;
+		cout << "DefConstructor:\t" << this << endl;
 	}
-	String(const char* str):size(strlen(str) + 1), str(new char[size] {})
+	String(const char* str) :String(strlen(str) + 1)
 	{
-		/*this->size = strlen(str) + 1;
-		this->str = new char[size] {};*/
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
-		cout << "1ArgConstructor:\t" << this << endl;
+		cout << "1ArgConstructor:" << this << endl;
 	}
-	String(const String& other):size(other.size), str(other.str)
+	String(const String& other) :String(other.str)
 	{
-		/*this->size = other.size;
-		this->str = new char[size] {};*/
-		for (int i = 0; i < size; i++)
-			this->str[i] = other.str[i];
-		cout << "CopyConstructor:\t" << endl;
+		//Deep copy - побитовое копирование
+		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
+		cout << "CopyConstructor:" << this << endl;
 	}
-	String(String&& other)noexcept:size(other.size = 0), str(other.str = nullptr)
+	String(String&& other)noexcept :size(other.size), str(other.str)
 	{
-		/*this->size = other.size;
-		this->str = other.str;
+		//Shallow copy - поверхностное копирование
 		other.size = 0;
-		other.str = nullptr;*/ // -- Указатель на 0
+		other.str = nullptr;		//nullptr - это указатель на ноль.
 		cout << "MoveConstructor:" << this << endl;
 	}
 	~String()
 	{
 		delete this->str;
-		cout << "Destructor:\t\t" << this << endl;
+		cout << "Destructor:\t" << this << endl;
 	}
-	//Operators:
+
+	//				Operators:
 	String& operator=(const String& other)
 	{
-		if (this == &other) return *this;
+		//			l-value = r-value;
+		if (this == &other)return *this;
+		delete[] this->str;
 		this->size = other.size;
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)
 			this->str[i] = other.str[i];
-		cout << "CopyAssignment:\t\t" << this << endl;
+		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
+	String& operator=(String&& other)noexcept
+	{
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment:\t" << this << endl;
+		return *this;
+	}
+
 	String& operator+=(const String& other)
 	{
 		return *this = *this + other;
 	}
+
 	const char& operator[](int i)const
 	{
 		return str[i];
@@ -76,19 +91,8 @@ public:
 	{
 		return str[i];
 	}
-	
-	String& operator=(String&& other)noexcept
-	{
-		this->size = other.size;
-		this->str = other.str;
-		other.size = 0;
-		other.str = nullptr; // -- Указатель на 0
-		cout << "MoveAssignment:\tt" << this << endl;
-		return *this;
-	}
-	
 
-	// Methods:
+	//				Methods:
 	void print()const
 	{
 		cout << "Size:\t" << size << endl;
@@ -96,47 +100,88 @@ public:
 	}
 };
 
+String operator+(const String& left, const String& right)
+{
+	String cat(left.get_size() + right.get_size() - 1);
+	for (int i = 0; i < left.get_size(); i++)
+		cat[i] = left[i];
+	//cat.get_str()[i] = left.get_str()[i];
+	for (int i = 0; i < right.get_size(); i++)
+		cat[i + left.get_size() - 1] = right[i];
+	//cat.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+	return cat;
+}
+
 std::ostream& operator<<(std::ostream& os, const String& obj)
 {
 	return os << obj.get_str();
 }
-String operator+(const String& left, const String& right)
-{
-	String cat (left.get_size() + right.get_size() - 1);
-	for (int i = 0; i < left.get_size(); i++)
-		cat[i] = left[i];
-	for (int i = 0; i < right.get_size(); i++)
-		cat[i + left.get_size() - 1] = right[i];
-	return cat;
-}
 
 #define BASE_CHECK
+//#define CALLING_CONSTRUCTORS
 
 void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef BASE_CHECK
 	String str(5);
-    str.print();
+	str.print();
 
-	String str1 = "Hello";
-	cout << str1 << endl; str1 = str1;
+	String str1 = "Hello";	//"Hello" - это строковая константа
+	str1 = str1;
+	cout << str1 << endl;
 
 	String str2 = "World";
 	cout << str2 << endl;
 
+	//cout << "\n-----------------------------------------\n";
+	//str1 += str2;
+	//cout << str1 << endl;
+	//cout << "\n-----------------------------------------\n";
+
 	String str3;
-	str3 = str1 + str2;
+	str3 = str1 + str2;	//Move constructor
 	cout << str3 << endl;
 
-	str1 += str2;
-	cout << str1 << endl;
+	String str4 = str3;	//Copy constructor
+	str4.print();
+	//str1 = str3;
+	//cout << str1 << endl;
 
-	String str4 = str1 + str2;
-	cout << str4 << endl;
-
-	String str5 = str4;
-	str5.print();
+	/*
+	Deep copy:
+	CopyConstructor;
+	CopyAssignment
+	------------------------------
+	Shallow copy:
+	MoveConstructor
+	MoveAssignment
+	other
+	Move semantic C++11, C++03
+	R-value reference
+	------------------------------
+	*/
 #endif // BASE_CHECK
+
+#ifdef CALLING_CONSTRUCTORS
+	String str1;	//Default constructor
+	str1.print();
+	String str2 = "Hello";	//Single argument constructor
+	str2.print();
+	String str3 = str2;	//Copy constructor
+	str3.print();
+	String str4();	//Здесь не вызывается никакой конструктор, потому что НЕ создается объект,
+	//Здесь объявлется функция str4(), которая не принимает никаких параметров,
+	//и возвращает значение типа String.
+//str4.print();	//str4 - это НЕ объект, это функция, а для функции нельзя вызвать метод.
+//Если мы хотим явно вызвать конструктор по умолчанию, то это можно сделать так:
+	String str5{};	//Явный вызов конструктора по умолчанию.
+	str5.print();
+	String str6{ 22 };
+	str6.print();
+	String str7{ "World" };
+	str7.print();
+	String str8{ str7 };	//Copy constructor  
+#endif // CALLING_CONSTRUCTORS
 
 }
