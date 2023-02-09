@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntroductionToOOP", "Introd
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fraction", "Fractio\Fractio.vcxproj", "{0741B6E7-B4BE-4ADB-83DD-FB89C51BDCCB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "String", "String\String.vcxproj", "{DEED4689-CB46-43C4-AB6D-59483679E875}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{0741B6E7-B4BE-4ADB-83DD-FB89C51BDCCB}.Release|x64.Build.0 = Release|x64
 		{0741B6E7-B4BE-4ADB-83DD-FB89C51BDCCB}.Release|x86.ActiveCfg = Release|Win32
 		{0741B6E7-B4BE-4ADB-83DD-FB89C51BDCCB}.Release|x86.Build.0 = Release|Win32
+		{DEED4689-CB46-43C4-AB6D-59483679E875}.Debug|x64.ActiveCfg = Debug|x64
+		{DEED4689-CB46-43C4-AB6D-59483679E875}.Debug|x64.Build.0 = Debug|x64
+		{DEED4689-CB46-43C4-AB6D-59483679E875}.Debug|x86.ActiveCfg = Debug|Win32
+		{DEED4689-CB46-43C4-AB6D-59483679E875}.Debug|x86.Build.0 = Debug|Win32
+		{DEED4689-CB46-43C4-AB6D-59483679E875}.Release|x64.ActiveCfg = Release|x64
+		{DEED4689-CB46-43C4-AB6D-59483679E875}.Release|x64.Build.0 = Release|x64
+		{DEED4689-CB46-43C4-AB6D-59483679E875}.Release|x86.ActiveCfg = Release|Win32
+		{DEED4689-CB46-43C4-AB6D-59483679E875}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
