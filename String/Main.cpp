@@ -21,25 +21,31 @@ public:
 		return str;
 	}
 	// Constructers:
-	explicit String(int size = 80)
+	explicit String(int size = 80):size(size), str(new char[size] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};
 		cout << "DegConstructor:\t\t" << this << endl;
 	}
-	String(const char* str)
+	String(const char* str):size(strlen(str) + 1), str(new char[size] {})
 	{
-		this->size = strlen(str) + 1;
-		this->str = new char[size] {};
+		/*this->size = strlen(str) + 1;
+		this->str = new char[size] {};*/
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
-	String(String&& other)noexcept
+	String(const String& other):size(other.size), str(other.str)
 	{
-		this->size = other.size;
+		/*this->size = other.size;
+		this->str = new char[size] {};*/
+		for (int i = 0; i < size; i++)
+			this->str[i] = other.str[i];
+		cout << "CopyConstructor:\t" << endl;
+	}
+	String(String&& other)noexcept:size(other.size = 0), str(other.str = nullptr)
+	{
+		/*this->size = other.size;
 		this->str = other.str;
 		other.size = 0;
-		other.str = nullptr; // -- ”казатель на 0
+		other.str = nullptr;*/ // -- ”казатель на 0
 		cout << "MoveConstructor:" << this << endl;
 	}
 	~String()
@@ -70,14 +76,7 @@ public:
 	{
 		return str[i];
 	}
-	String(const String& other)
-	{
-		this->size = other.size;
-		this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-			this->str[i] = other.str[i];
-		cout << "CopyConstructor:\t" << endl;
-	}
+	
 	String& operator=(String&& other)noexcept
 	{
 		this->size = other.size;
@@ -111,11 +110,14 @@ String operator+(const String& left, const String& right)
 	return cat;
 }
 
+#define BASE_CHECK
+
 void main()
 {
 	setlocale(LC_ALL, "");
-	//String str1(5);
-	//str1.print();
+#ifdef BASE_CHECK
+	String str(5);
+    str.print();
 
 	String str1 = "Hello";
 	cout << str1 << endl; str1 = str1;
@@ -132,5 +134,9 @@ void main()
 
 	String str4 = str1 + str2;
 	cout << str4 << endl;
+
+	String str5 = str4;
+	str5.print();
+#endif // BASE_CHECK
 
 }
