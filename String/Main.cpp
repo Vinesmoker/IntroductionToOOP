@@ -6,7 +6,7 @@ using std::cout;
 using std::endl;;
 
 ////////////////////////////////////////////////////////////////////////////
-/////////////////         ќбъ€вление класса - CLASS DECLORATION
+///////////////// ќбъ€вление класса - CLASS DECLORATION ////////////////////
 
 class String;
 String operator+(const String& left, const String& right);
