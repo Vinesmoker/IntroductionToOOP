@@ -176,6 +176,20 @@ public:
 	}
 };
 
+Fraction operator+(Fraction& left, Fraction& right)
+{
+	left.to_improper();
+	right.to_improper();
+	return Fraction(left.get_numerator() * right.get_denominator() + right.get_numerator() * left.get_denominator(), 
+		left.get_denominator() * right.get_denominator()).to_proper();
+}
+Fraction operator-(Fraction& left, Fraction& right)
+{
+	left.to_improper();
+	right.to_improper();
+	return Fraction(left.get_numerator() * right.get_denominator() - right.get_numerator() * left.get_denominator(),
+		left.get_denominator() * right.get_denominator()).to_proper();
+}
 Fraction operator*(Fraction left, Fraction right)
 {
 	left.to_improper();
@@ -197,15 +211,13 @@ Fraction operator*(Fraction left, Fraction right)
 		left.get_denominator() * right.get_denominator()
 	).to_proper().reduce();
 }
-Fraction operator/(const Fraction& left,const Fraction& right)
+Fraction operator/(const Fraction& left, const Fraction& right)
 {
 	/*left.to_improper();
 	right.to_improper();
-	return Fraction
-	(
+	return Fraction(
 		left.get_numerator() * right.get_denominator(),
-		right.get_numerator() * left.get_denominator()
-	).to_proper();*/
+		right.get_numerator() * left.get_denominator()).to_proper();*/
 	return left * right.inverted();
 }
 
@@ -265,7 +277,8 @@ std::istream& operator>>(std::istream& input, Fraction& fraction)
 }
 
 //#define CONSTRUCTORS_CHECK
-//#define ARITHMETICAL_OPERATORS_CHECK
+#define ARITHMETICAL_OPERATORS_CHECK
+//#define ASSIGNMENT_OPERATORS+CIN
 
 void main()
 {
@@ -288,24 +301,34 @@ void main()
 #endif // CONSTRUCTORS_CHECK
 
 #ifdef ARITHMETICAL_OPERATORS_CHECK
-	Fraction A(2, 3, 4);
+	Fraction A(1, 2, 3);
 	A.print();
 
-	Fraction B(3, 4, 5);
+	Fraction B(1, 2, 3);
 	B.print();
-
+	
 	Fraction C = A * B;
 	C.print();
-
-	Fraction D = A / B;
+	
+	Fraction D = C / A;
 	D.print();
 
-	//A = A * B;
 	A *= B;
 	A /= B;
 	A.print();
+
+	Fraction E(2, 3, 4);
+	E.print();
+
+	Fraction F(3, 4, 5);
+	F.print();
+
+	Fraction G = E + F;
+	G.print();
+	
 #endif // ARITHMETICAL_OPERATORS_CHECK
 
+#ifdef ASSIGNMENT_OPERATORS+CIN
 	cout << (Fraction(1, 2, 3) == Fraction(1, 2, 3)) << endl;
 	cout << (Fraction(1, 2, 3) != Fraction(1, 2, 3)) << endl;
 	Fraction A(1, 2, 3);
@@ -319,4 +342,6 @@ void main()
 	cout << (Fraction(1, 1, 4) <= Fraction(1, 2, 3)) << endl;
 	cin >> A; A.to_proper();
 	A.print();
+#endif // ASSIGNMENT_OPERATORS+CIN
+
 }
