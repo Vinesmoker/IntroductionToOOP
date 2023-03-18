@@ -256,6 +256,13 @@ bool operator<=(Fraction left, Fraction right)
 		right.get_numerator() * left.get_denominator();
 }
 
+std::istream& operator>>(std::istream& input, Fraction& fraction)
+{
+	int integer, numerator, denominator;
+	input >> integer >> numerator >> denominator;
+	fraction = Fraction(integer, numerator, denominator);
+	return input;
+}
 
 //#define CONSTRUCTORS_CHECK
 //#define ARITHMETICAL_OPERATORS_CHECK
@@ -310,4 +317,6 @@ void main()
 	cout << (Fraction(1, 1, 4) < Fraction(1, 2, 3)) << endl;
 	cout << (Fraction(2, 2, 3) >= Fraction(1, 2, 3)) << endl;
 	cout << (Fraction(1, 1, 4) <= Fraction(1, 2, 3)) << endl;
+	cin >> A; A.to_proper();
+	A.print();
 }
