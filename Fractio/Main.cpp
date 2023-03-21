@@ -44,7 +44,7 @@ public:
 		this->denominator = 1;
 		//cout << "DefultConstructor:\t" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
 		this->integer = integer;
 		this->numerator = 0;
@@ -124,6 +124,16 @@ public:
 		numerator--;
 		denominator--;
 		return last;
+	}
+
+	//Type-cast operators
+	explicit operator int()const 
+	{
+		return Fraction(*this).to_proper().integer;
+	}
+	explicit operator double()const
+	{
+		return Fraction(*this).to_proper().integer;
 	}
 
 	//!!!!!!!!!!!!!!!!!!!!!!!!!! Methods:
@@ -277,8 +287,15 @@ std::istream& operator>>(std::istream& input, Fraction& fraction)
 }
 
 //#define CONSTRUCTORS_CHECK
-#define ARITHMETICAL_OPERATORS_CHECK
-//#define ASSIGNMENT_OPERATORS+CIN
+//#define ARITHMETICAL_OPERATORS_CHECK
+//#define COMPARISON_OPERATORS
+//#define COMPARISON_OPERATORS
+//#define TYPE_CONVERSION_BASICS
+//#define CONVERSION_FROM_OTHER_TO_CLASS
+//#define CONVERSION_FROM_CLASS_TO_OTHER
+#define HOME_WORK_1
+//#define HOME_WORK_2
+
 
 void main()
 {
@@ -328,7 +345,7 @@ void main()
 	
 #endif // ARITHMETICAL_OPERATORS_CHECK
 
-#ifdef ASSIGNMENT_OPERATORS+CIN
+#ifdef COMPARISON_OPERATORS
 	cout << (Fraction(1, 2, 3) == Fraction(1, 2, 3)) << endl;
 	cout << (Fraction(1, 2, 3) != Fraction(1, 2, 3)) << endl;
 	Fraction A(1, 2, 3);
@@ -342,6 +359,49 @@ void main()
 	cout << (Fraction(1, 1, 4) <= Fraction(1, 2, 3)) << endl;
 	cin >> A; A.to_proper();
 	A.print();
-#endif // ASSIGNMENT_OPERATORS+CIN
+#endif // COMPARISON_OPERATORS
+
+#ifdef TYPE_CONVERSION_BASICS
+	//cout << 7. / 2 << endl;
+	int a = 2;      //No conversion
+	double b = 3;   //Conversion from less to more
+	int c = b;      //Conversion from more to less with no data loss
+	int d = 4.5;    //Conversion from more to less with data loss  
+#endif // TYPE_CONVERSION_BASICS
+
+#ifdef CONVERSION_FROM_OTHER_TO_CLASS
+	Fraction A = (Fraction)5; //Conversion from other to class prefomed by single argument
+	A.print();
+
+	Fraction B;
+	B = Fraction(8);			//Conversion from other to class prefomed by assignment operator
+	B.print();
+#endif // CONVERSION_FROM_OTHER_TO_CLASS
+
+#ifdef CONVERSION_FROM_CLASS_TO_OTHER
+
+	Fraction A(11, 4);
+	A.print();
+	int a = A;
+	cout << a << endl;
+
+#endif // CONVERSION_FROM_CLASS_TO_OTHER
+
+#ifdef HOME_WORK_1
+
+	Fraction B(2, 3, 4);
+	B.print();
+	double b = B;
+	cout << b << endl;
+
+#endif // HOME_WORK_1
+
+#ifdef HOME_WORK_2
+
+	Fraction B = 2.75;
+	cout << B << endl;
+
+#endif // HOME_WORK_2
+
 
 }
