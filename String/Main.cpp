@@ -1,12 +1,12 @@
-#include<iostream>
+п»ї#include<iostream>
 using namespace std;
 
 class String;
 String operator+(const String& left, const String& right);
 class String
 {
-	int size;  // размер строки
-	char* str; // адрес строки в динамическом массиве
+	int size;  // СЂР°Р·РјРµСЂ СЃС‚СЂРѕРєРё
+	char* str; // Р°РґСЂРµСЃ СЃС‚СЂРѕРєРё РІ РґРёРЅР°РјРёС‡РµСЃРєРѕРј РјР°СЃСЃРёРІРµ
 public:
 	int get_size()const
 	{
@@ -39,7 +39,7 @@ public:
 		this->size = other.size;
 		this->str = other.str;
 		other.size = 0;
-		other.str = nullptr; // -- Указатель на 0
+		other.str = nullptr; // -- РЈРєР°Р·Р°С‚РµР»СЊ РЅР° 0
 		cout << "MoveConstructor:" << this << endl;
 	}
 	~String()
@@ -83,7 +83,7 @@ public:
 		this->size = other.size;
 		this->str = other.str;
 		other.size = 0;
-		other.str = nullptr; // -- Указатель на 0
+		other.str = nullptr; // -- РЈРєР°Р·Р°С‚РµР»СЊ РЅР° 0
 		cout << "MoveAssignment:\tt" << this << endl;
 		return *this;
 	}
